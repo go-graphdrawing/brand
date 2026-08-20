@@ -11,6 +11,11 @@
 |------|------------|
 | `svg/go-graphdrawing.svg` | **the source of truth** — 256×256, `rx=56` rounded square, diagonal gradient, white line glyph |
 | `png/color/<size>/go-graphdrawing.png` | rasterised at 16, 32, 48, 64, 88, 128, 256, 512 and 1024 px |
+| `jpg/<size>/go-graphdrawing.jpg` | the same sizes, flattened onto white (JPEG has no alpha) |
+| `avatar/go-graphdrawing.png` | 512 px, for the org avatar |
+| `ico/go-graphdrawing.ico` | Windows icon |
+| `icns/go-graphdrawing.icns` | macOS icon |
+| `social/go-graphdrawing.png` | 1280x640 social preview: full-bleed gradient, glyph at 2x |
 
 ## The mark
 
@@ -23,7 +28,7 @@ rasteriser, plus the standard library's PNG encoder — no Python, no Pillow, no
 `sips`, no `iconutil`:
 
 ```
-logopng svg/go-graphdrawing.svg png/color 16 32 48 64 88 128 256 512 1024
+brandkit svg/go-graphdrawing.svg .
 ```
 
 Rasterising these logos is what surfaced the gaps that
@@ -33,10 +38,11 @@ squares** — a gradient it could not read was silently replaced by the inherite
 black. Gradients, strokes and `rect rx` were added there rather than worked
 around here.
 
-`jpg/`, `ico/`, `icns/`, `avatar/` and the social banner are **not** generated
-yet: they need encoders (and a font, for the banner's wordmark) that the Go stack
-does not have yet. The previous pipeline produced them with Python and macOS
-binaries, which this fleet no longer allows.
+The **social banner** is the mark on a full-bleed gradient with the glyph at 2x:
+a preview is shown small, and a banner must never be white-backed because it is
+seen against both light and dark chrome. It carries **no wordmark** — text would
+need glyph outlines, and `go-opentype` keeps `glyphContours` private, so the org
+name is deliberately absent rather than approximated.
 
 ## License
 
