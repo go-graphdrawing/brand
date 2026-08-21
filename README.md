@@ -40,9 +40,12 @@ around here.
 
 The **social banner** is the mark on a full-bleed gradient with the glyph at 2x:
 a preview is shown small, and a banner must never be white-backed because it is
-seen against both light and dark chrome. It carries **no wordmark** — text would
-need glyph outlines, and `go-opentype` keeps `glyphContours` private, so the org
-name is deliberately absent rather than approximated.
+seen against both light and dark chrome. The org name beside it is drawn as **real outlines**, not text: `go-gfx` implements
+no `<text>` — a font stack is outside its scope — so `go-opentype`'s
+`Face.GlyphSVGPath` turns the name into `<path>` data, which that rasteriser
+already understands. The face is **Manrope**, embedded in `go-opentype/fonts`, and
+the wordmark is FITTED to the room beside the glyph so a long name shrinks instead
+of running off the canvas.
 
 ## License
 
